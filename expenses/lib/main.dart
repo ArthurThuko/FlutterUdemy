@@ -1,10 +1,7 @@
-import 'dart:math';
-
-import 'package:expenses/compoments/transaction_form.dart';
-
 import 'package:flutter/material.dart';
-import './compoments/transaction_form.dart';
-import './compoments/transaction_list.dart';
+import 'dart:math';
+import 'components/transaction_form.dart';
+import 'components/transaction_list.dart';
 import 'models/transaction.dart';
 
 main() => runApp(ExpensesApp());
@@ -12,7 +9,32 @@ main() => runApp(ExpensesApp());
 class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MyHomePage());
+    final ThemeData tema = ThemeData();
+
+    return MaterialApp(
+      home: MyHomePage(),
+      theme: tema.copyWith(
+        colorScheme: tema.colorScheme.copyWith(
+          primary: Colors.purple,
+          secondary: Colors.amber,
+        ),
+        textTheme: tema.textTheme.copyWith(
+          headline6: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -38,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   _addTransaction(String title, double value) {
-    final newTrasaction = Transaction(
+    final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       value: value,
@@ -46,16 +68,19 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     setState(() {
-      _transactions.add(newTrasaction);
+      _transactions.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
   }
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return TransactionForm(_addTransaction);
-        });
+      context: context,
+      builder: (_) {
+        return TransactionForm(_addTransaction);
+      },
+    );
   }
 
   @override
@@ -65,9 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Despesas Pessoais'),
         actions: <Widget>[
           IconButton(
-            onPressed: () => _openTransactionFormModal(context),
             icon: Icon(Icons.add),
-          )
+            onPressed: () => _openTransactionFormModal(context),
+          ),
         ],
       ),
       body: SingleChildScrollView(
