@@ -1,3 +1,4 @@
+import 'package:expenses/components/chart.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'components/transaction_form.dart';
@@ -7,10 +8,11 @@ import 'models/transaction.dart';
 main() => runApp(ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
+  ExpensesApp({Key? key}) : super(key: key);
+  final ThemeData tema = ThemeData();
+
   @override
   Widget build(BuildContext context) {
-    final ThemeData tema = ThemeData();
-
     return MaterialApp(
       home: MyHomePage(),
       theme: tema.copyWith(
@@ -19,14 +21,14 @@ class ExpensesApp extends StatelessWidget {
           secondary: Colors.amber,
         ),
         textTheme: tema.textTheme.copyWith(
-          headline6: TextStyle(
+          titleLarge: const TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 20,
@@ -39,25 +41,48 @@ class ExpensesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _transactions = [
+  final List<Transaction> _transactions = [
     Transaction(
-        id: 't1', title: 'Conta #01', value: 310.76, date: DateTime.now()),
+        id: 't1',
+        title: 'Conta #01',
+        value: 310.76,
+        date: DateTime.now().subtract(Duration(days: 3))),
     Transaction(
-        id: 't2', title: 'Conta #02', value: 310.76, date: DateTime.now()),
+        id: 't2',
+        title: 'Conta #02',
+        value: 310.76,
+        date: DateTime.now().subtract(Duration(days: 34))),
     Transaction(
-        id: 't3', title: 'Conta #03', value: 310.76, date: DateTime.now()),
+        id: 't3',
+        title: 'Conta #03',
+        value: 310.76,
+        date: DateTime.now().subtract(Duration(days: 2))),
     Transaction(
-        id: 't4', title: 'Conta #04', value: 310.76, date: DateTime.now()),
+        id: 't4',
+        title: 'Conta #04',
+        value: 310.76,
+        date: DateTime.now().subtract(Duration(days: 1))),
     Transaction(
         id: 't5', title: 'Conta #05', value: 310.76, date: DateTime.now()),
     Transaction(
-        id: 't6', title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
+        id: 't6',
+        title: 'Conta de Luz',
+        value: 211.30,
+        date: DateTime.now().subtract(Duration(days: 3))),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
 
   _addTransaction(String title, double value) {
     final newTransaction = Transaction(
@@ -87,10 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Despesas Pessoais'),
+        title: const Text('Despesas Pessoais'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () => _openTransactionFormModal(context),
           ),
         ],
@@ -99,14 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('Gráfico'),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransationList(_transactions),
           ],
         ),
