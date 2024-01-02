@@ -30,7 +30,7 @@ class Chart extends StatelessWidget {
         'day': DateFormat.E().format(weeDay)[0],
         'value': totalSum,
       };
-    });
+    }).reversed.toList();
   }
 
   double get _weekTotalValue {
