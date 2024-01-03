@@ -14,7 +14,7 @@ class _TransactionFormState extends State<TransactionForm> {
 
   final valueController = TextEditingController();
 
-  _submitForm(){
+  _submitForm() {
     final title = titleController.text;
     final value = double.tryParse(valueController.text) ?? 0.0;
 
@@ -48,14 +48,35 @@ class _TransactionFormState extends State<TransactionForm> {
                 labelText: 'Valor (R\$)',
               ),
             ),
+            Container(
+              height: 70,
+              child: Row(
+                children: <Widget>[
+                  Text('Nenhuma Data Selecionada!'),
+                  TextButton(
+                    child: Text(
+                      'Selecionar Data',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {},
+                  )
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(
+                ElevatedButton(
                   onPressed: _submitForm,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).primaryColor,
+                  ),
                   child: Text(
                     'Nova Transação',
-                    style: TextStyle(color: Colors.purple),
+                    style: TextStyle(color: Theme.of(context).primaryColor),
                   ),
                 ),
               ],
