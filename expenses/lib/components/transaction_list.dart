@@ -14,14 +14,19 @@ class TransationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 430,
+      height: 300,
       child: transactions.isEmpty
           ? Column(
               children: <Widget>[
                 SizedBox(height: 20),
                 Text(
                   'Nenhuma Transação Cadastrada',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
                 SizedBox(height: 20),
                 Container(
@@ -45,17 +50,26 @@ class TransationList extends StatelessWidget {
                   ),
                   child: ListTile(
                     leading: CircleAvatar(
+                      backgroundColor: Colors.purple,
                       radius: 30,
                       child: Padding(
                         padding: const EdgeInsets.all(6),
                         child: FittedBox(
-                          child: Text('R\$${tr.value}'),
+                          child: Text(
+                            'R\$${tr.value}',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
                     title: Text(
                       tr.title,
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                     subtitle: Text(
                       DateFormat('d MMM y').format(tr.date),
