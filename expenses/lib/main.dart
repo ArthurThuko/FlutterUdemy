@@ -53,7 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+      return tr.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
     }).toList();
   }
 
@@ -74,9 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _removeTransaction(String id) {
     setState(() {
-      _transactions.removeWhere((tr) {
-        return tr.id == id;
-      });
+      _transactions.removeWhere((tr) => tr.id == id);
     });
   }
 
@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final actions = <Widget>[
       if (isLandscape)
         _getIconButton(
-          _showChart ? Icons.list : Icons.show_chart,
+          _showChart ? iconList : iconChart,
           () {
             setState(() {
               _showChart = !_showChart;
@@ -149,13 +149,13 @@ class _MyHomePageState extends State<MyHomePage> {
             //       ),
             //     ],
             //   ),
-            if (_showChart || isLandscape)
-              Container(
+            if (_showChart || !isLandscape)
+              SizedBox(
                 height: availabelHeight * (isLandscape ? 0.8 : 0.3),
                 child: Chart(_recentTransactions),
               ),
-            if (!_showChart || isLandscape)
-              Container(
+            if (!_showChart || !isLandscape)
+              SizedBox(
                 height: availabelHeight * (isLandscape ? 1 : 0.7),
                 child: TransationList(_transactions, _removeTransaction),
               ),

@@ -79,7 +79,10 @@ class TransationList extends StatelessWidget {
                   trailing: MediaQuery.of(context).size.width > 480
                       ? TextButton.icon(
                           onPressed: () => onRemove(tr.id),
-                          icon: Icon(Icons.delete),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Theme.of(context).errorColor,
+                          ),
                           label: Text(
                             'Excluir',
                             style:
