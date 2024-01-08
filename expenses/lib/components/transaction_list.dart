@@ -6,10 +6,7 @@ class TransationList extends StatelessWidget {
   final List<Transaction> transactions;
   final void Function(String) onRemove;
 
-  TransationList(
-    this.transactions,
-    this.onRemove,
-  );
+  const TransationList(this.transactions, this.onRemove, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +15,12 @@ class TransationList extends StatelessWidget {
             builder: (ctx, constraints) {
               return Column(
                 children: <Widget>[
+                  // ignore: prefer_const_constructors
                   SizedBox(height: 20),
+                  // ignore: prefer_const_constructors
                   Text(
                     'Nenhuma Transação Cadastrada',
+                    // ignore: prefer_const_constructors
                     style: TextStyle(
                       fontFamily: 'OpenSans',
                       fontSize: 18,
@@ -28,7 +28,9 @@ class TransationList extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
+                  // ignore: prefer_const_constructors
                   SizedBox(height: 20),
+                  // ignore: sized_box_for_whitespace
                   Container(
                     height: constraints.maxHeight * 0.6,
                     child: Image.asset(
@@ -46,6 +48,7 @@ class TransationList extends StatelessWidget {
               final tr = transactions[index];
               return Card(
                 elevation: 5,
+                // ignore: prefer_const_constructors
                 margin: EdgeInsets.symmetric(
                   vertical: 8,
                   horizontal: 5,
@@ -59,6 +62,7 @@ class TransationList extends StatelessWidget {
                       child: FittedBox(
                         child: Text(
                           'R\$${tr.value}',
+                          // ignore: prefer_const_constructors
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -66,6 +70,7 @@ class TransationList extends StatelessWidget {
                   ),
                   title: Text(
                     tr.title,
+                    // ignore: prefer_const_constructors
                     style: TextStyle(
                       fontFamily: 'OpenSans',
                       fontSize: 18,
@@ -81,16 +86,20 @@ class TransationList extends StatelessWidget {
                           onPressed: () => onRemove(tr.id),
                           icon: Icon(
                             Icons.delete,
+                            // ignore: deprecated_member_use
                             color: Theme.of(context).errorColor,
                           ),
                           label: Text(
                             'Excluir',
                             style:
+                                // ignore: deprecated_member_use
                                 TextStyle(color: Theme.of(context).errorColor),
                           ),
                         )
                       : IconButton(
+                          // ignore: prefer_const_constructors
                           icon: Icon(Icons.delete),
+                          // ignore: deprecated_member_use
                           color: Theme.of(context).errorColor,
                           onPressed: () => onRemove(tr.id),
                         ),

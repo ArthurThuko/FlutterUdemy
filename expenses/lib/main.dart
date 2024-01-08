@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:expenses/components/chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +25,15 @@ class ExpensesApp extends StatelessWidget {
           secondary: Colors.amber,
         ),
         textTheme: tema.textTheme.copyWith(
+          // ignore: prefer_const_constructors
           button: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
+        // ignore: prefer_const_constructors
         appBarTheme: AppBarTheme(
+          // ignore: prefer_const_constructors
           titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
             fontSize: 20,
@@ -41,6 +46,7 @@ class ExpensesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables
   MyHomePage({Key? key}) : super(key: key);
 
   @override
@@ -54,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
       return tr.date.isAfter(DateTime.now().subtract(
+        // ignore: prefer_const_constructors
         Duration(days: 7),
       ));
     }).toList();
@@ -121,6 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
 
     final appBar = AppBar(
+      // ignore: prefer_const_constructors
       title: Text('Despesas Pessoais'),
     );
 
@@ -167,6 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Platform.isIOS
         ? CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
+              // ignore: prefer_const_constructors
               middle: Text('Despesas Pessoais'),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -182,6 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
             floatingActionButton: Platform.isIOS
                 ? Container()
                 : FloatingActionButton(
+                    // ignore: prefer_const_constructors
                     child: Icon(Icons.add),
                     onPressed: () => _openTransactionFormModal(context),
                   ),

@@ -3,56 +3,48 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 class AdaptativeTextField extends StatelessWidget {
-  final Function submitForm;
+  final Function(String) submitForm;
+  final TextInputType keyboardType;
   final TextEditingController varController;
-  final bool isNum;
+  final String labelText;
 
-  AdaptativeTextField({
+  const AdaptativeTextField({super.key, 
     required this.submitForm,
     required this.varController,
-    required this.isNum,
+    required this.labelText,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
   Widget build(BuildContext context) {
     return Platform.isIOS
-        ? isNum
-            ? CupertinoTextField(
-                controller: varController,
-                onSubmitted: (_) => submitForm(),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                prefix: Text(
-                  'Valor (R\$)',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+        ? Padding(
+            padding: const EdgeInsets.only(
+              bottom: 10,
+            ),
+            child: CupertinoTextField(
+              controller: varController,
+              onSubmitted: (_) => submitForm,
+              keyboardType: keyboardType,
+              prefix: Text(
+                labelText,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
-              )
-            : CupertinoTextField(
-                controller: varController,
-                onSubmitted: (_) => submitForm(),
-                prefix: Text(
-                  'Título',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
-        : isNum
-            ? TextField(
-                controller: varController,
-                onSubmitted: (_) => submitForm(),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(
-                  labelText: 'Valor (R\$)',
-                ),
-              )
-            : TextField(
-                controller: varController,
-                onSubmitted: (_) => submitForm(),
-                decoration: InputDecoration(
-                  labelText: 'Título',
-                ),
-              );
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 6,
+                vertical: 12,
+              ),
+            ),
+          )
+        : TextField(
+            controller: varController,
+            onSubmitted: (_) => submitForm,
+            keyboardType: keyboardType,
+            decoration: InputDecoration(
+              labelText: labelText,
+            ),
+          );
   }
 }
