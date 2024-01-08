@@ -1,7 +1,7 @@
 import 'package:expenses/components/adptative_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'adptative_button.dart';
+import 'adptative_data_picker.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime) onSubmit;
@@ -21,28 +21,12 @@ class _TransactionFormState extends State<TransactionForm> {
     final title = _titleController.text;
     final value = double.tryParse(_valueController.text) ?? 0;
 
+    // ignore: unnecessary_null_comparison
     if (title.isEmpty || value <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.onSubmit(title, value, _selectedDate!);
-  }
-
-  _showDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2019),
-      lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
-
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
+    widget.onSubmit(title, value, _selectedDate);
   }
 
   @override
@@ -59,55 +43,24 @@ class _TransactionFormState extends State<TransactionForm> {
           ),
           child: Column(
             children: [
-              TextField(
-                controller: _titleController,
-                onSubmitted: (_) => _submitForm(),
-                decoration: const InputDecoration(
-                  labelText: 'Título',
-                ),
-              ),
-              TextField(
-                controller: _valueController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                onSubmitted: (_) => _submitForm(),
-                decoration: const InputDecoration(
-                  labelText: 'Valor (R\$)',
-                ),
-              ),
-              /*
               AdaptativeTextField(
-                  submitForm: _submitForm,
-                  varController: _titleController,
-                  isNum: false),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                varController: _titleController,
+                submitForm: _submitForm(),
+                labelText: 'Valor (R\$)',
+              ),
               AdaptativeTextField(
-                  submitForm: _submitForm,
-                  varController: _valueController,
-                  isNum: true),
-                  */
-              SizedBox(
-                height: 70,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        _selectedDate == null
-                            ? 'Nenhuma data selecionada!'
-                            : 'Data Selecionada: ${DateFormat('dd/MM/y').format(_selectedDate!)}',
-                      ),
-                    ),
-                    TextButton(
-                      child: Text(
-                        'Selecionar Data',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onPressed: _showDatePicker,
-                    )
-                  ],
-                ),
+                submitForm: _submitForm(),
+                varController: _titleController,
+                labelText: 'Título',
+              ),
+              AdptativeDataPicker(
+                selectedDate: _selectedDate,
+                onDateChanged: (newDate) {
+                  setState(() {
+                    _selectedDate = newDate;
+                  });
+                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
