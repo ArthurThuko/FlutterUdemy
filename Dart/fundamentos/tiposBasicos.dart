@@ -10,4 +10,7 @@ main() {
   x = 159;
 
   print(x);
+
+  print(n1);
+  print(y);
 }
