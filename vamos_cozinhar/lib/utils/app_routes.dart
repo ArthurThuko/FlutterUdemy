@@ -1,5 +1,6 @@
 class AppRoutes {
-  static const home = '/';
-  static const categoriesMeals = '/categories-meals';
-  static const mealDetail = '/metal-detail';
+  static const HOME = '/';
+  static const CATEGORIESMEALS = '/categories-meals';
+  static const MEALDETAIL = '/metal-detail';
+  static const SETTINGS = '/settings';
 }
